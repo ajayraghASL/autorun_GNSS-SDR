@@ -8,15 +8,15 @@ import re
 from subprocess import Popen, PIPE
 
 # directory paths
-dropbox_dir = "/home/ajay/Dropbox/GPSDataSet/"
-obs = "./*.22O"
-nav = "./*.22N"
+dropbox_dir = "/home/augsenselab/Dropbox/GPSDataSet/"
+cwd = os.getcwd()
+obs = str(cwd)+"/*.22O"
+nav = str(cwd)+"/*.22N"
+print(cwd)
 
 path = os.path.realpath(__file__)
 script_name = os.path.basename(path)
 config_path = re.sub(script_name, '', path)
-
-print(config_path)
 
 # variable for gnss-sdr runtime taking time in seconds provided from terminal
 parser = argparse.ArgumentParser()
@@ -25,7 +25,7 @@ args = parser.parse_args()
 run_time = args.runtime
 
 #Python subprocess to run gnss-sdr for the prescribed time witte
-p = Popen(["gnss-sdr --config_file={}rtlsdr.conf".format(config_path)], stdin=PIPE, shell=True)
+p = Popen(["/home/augsenselab/gnss-sdr/install/gnss-sdr --config_file={}rtlsdr.conf".format(config_path)], stdin=PIPE, shell=True)
 time.sleep(run_time)
 p.communicate(input=b'q')
 
