@@ -17,8 +17,6 @@ path = os.path.realpath(__file__)
 script_name = os.path.basename(path)
 config_path = re.sub(script_name, '', path)
 
-print(config_path)
-
 # variable for gnss-sdr runtime taking time in seconds provided from terminal
 parser = argparse.ArgumentParser()
 parser.add_argument('-r', '--runtime', default = 3600, dest = 'runtime', help = 'provide runtime in seconds', type= int)
@@ -26,7 +24,7 @@ args = parser.parse_args()
 run_time = args.runtime
 
 #Python subprocess to run gnss-sdr for the prescribed time witte
-p = Popen(["gnss-sdr --config_file={}rtlsdr.conf".format(config_path)], stdin=PIPE, shell=True)
+p = Popen(["/home/augsenselab/gnss-sdr/install/gnss-sdr --config_file={}rtlsdr.conf".format(config_path)], stdin=PIPE, shell=True)
 time.sleep(run_time)
 p.communicate(input=b'q')
 
