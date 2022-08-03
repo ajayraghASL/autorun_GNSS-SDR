@@ -11,6 +11,7 @@ from subprocess import Popen, PIPE
 dropbox_dir = "/home/ajay/Dropbox/GPSDataSet/"
 obs = "./*.22O"
 nav = "./*.22N"
+geo = "./*.geojson"
 
 path = os.path.realpath(__file__)
 script_name = os.path.basename(path)
@@ -32,10 +33,13 @@ p.communicate(input=b'q')
 #finding the newly created obs and nav files from provided directory
 obs_files = glob.glob(obs)
 nav_files = glob.glob(nav)
+geo_files = glob.glob(geo)
 new_obs = max(obs_files, key=os.path.getctime)
 new_nav = max(nav_files, key=os.path.getctime)
+new_geo = max(geo_files, key=os.path.getctime)
 new_obs_name = os.path.basename(new_obs)
 new_nav_name = os.path.basename(new_nav)
+new_geo_name = os.path.basename(new_geo)
 
 #extracting the created time of the latest file in the directory 
 obs_ctime = os.path.getctime(new_obs)
@@ -51,3 +55,4 @@ else:
     os.mkdir(new_dir_path)
     shutil.move(new_obs,new_dir_path+"/"+new_obs_name)
     shutil.move(new_nav,new_dir_path+"/"+new_nav_name)
+    shutil.move(new_geo,new_dir_path+"/"+new_geo_name)
